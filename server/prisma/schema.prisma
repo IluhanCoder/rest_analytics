@@ -47,6 +47,7 @@ model Transaction {
 
 model User {
   id                    String    @id @default(auto()) @map("_id") @db.ObjectId
+  role                  String    @default("user")
   email                 String    @unique
   username              String 
   password              String   

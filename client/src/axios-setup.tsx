@@ -14,6 +14,7 @@ export function setHeader() {
 
 export function dropHeader() {
   $api.defaults.headers.common['Authorization'] = null;
+  window.location.reload();
 }
 
 $api.defaults.headers.common["Access-Control-Allow-Methods"] = 'POST, GET, OPTIONS, PUT, DELETE';

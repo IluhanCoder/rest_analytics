@@ -46,10 +46,11 @@ exports.default = new /** @class */ (function () {
     }
     ProductController.prototype.createProduct = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var productData, file, product;
+            var productData, file, product, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 2, , 3]);
                         productData = JSON.parse(req.body.product);
                         file = req.file;
                         productData.image = file === null || file === void 0 ? void 0 : file.buffer;
@@ -57,65 +58,95 @@ exports.default = new /** @class */ (function () {
                     case 1:
                         product = _a.sent();
                         return [2 /*return*/, res.status(200).json(product)];
+                    case 2:
+                        error_1 = _a.sent();
+                        console.log(error_1);
+                        return [2 /*return*/, res.status(500).send(error_1)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     ProductController.prototype.fetchProducts = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var products;
+            var products, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, product_service_2.default.fetchProducts()];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, product_service_2.default.fetchProducts()];
                     case 1:
                         products = _a.sent();
                         return [2 /*return*/, res.status(200).json(products)];
+                    case 2:
+                        error_2 = _a.sent();
+                        console.log(error_2);
+                        return [2 /*return*/, res.status(500).send(error_2)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     ProductController.prototype.updateProduct = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var productData, productId, product;
+            var productData, productId, product, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 2, , 3]);
                         productData = req.body.productData;
                         productId = req.params.productId;
                         return [4 /*yield*/, product_service_2.default.updateProduct(productId, productData)];
                     case 1:
                         product = _a.sent();
                         return [2 /*return*/, res.status(200).json(product)];
+                    case 2:
+                        error_3 = _a.sent();
+                        console.log(error_3);
+                        return [2 /*return*/, res.status(500).send(error_3)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     ProductController.prototype.deleteProduct = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var productId;
+            var productId, error_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 2, , 3]);
                         productId = req.params.productId;
                         return [4 /*yield*/, product_service_2.default.deleteProduct(productId)];
                     case 1:
                         _a.sent();
                         return [2 /*return*/, res.status(200).send("product has been deleted succesfully")];
+                    case 2:
+                        error_4 = _a.sent();
+                        console.log(error_4);
+                        return [2 /*return*/, res.status(500).send(error_4)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     ProductController.prototype.filterProducts = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var filter, products;
+            var filter, products, error_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 2, , 3]);
                         filter = req.body;
                         return [4 /*yield*/, product_service_2.default.filterProducts(filter)];
                     case 1:
                         products = _a.sent();
                         return [2 /*return*/, res.status(200).json(products)];
+                    case 2:
+                        error_5 = _a.sent();
+                        console.log(error_5);
+                        return [2 /*return*/, res.status(500).send(error_5)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });

@@ -39,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function authMiddleware(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            if (!req.cookies.token)
+            if (!req.headers["authorization"])
                 return [2 /*return*/, res.status(401).send({ message: "user is not authorised" })];
             else
                 next();

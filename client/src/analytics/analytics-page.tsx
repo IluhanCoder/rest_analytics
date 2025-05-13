@@ -11,8 +11,8 @@ import { useNavigate } from "react-router-dom";
 
 const AnalyticsPage = () => {
   const [analytics, setAnalytics] = useState<AnalyticsResult>();
-  const [startDate, setStartDate] = useState<Date>(new Date("2023-11-01"));
-  const [endDate, setEndDate] = useState<Date>(new Date("2024-12-01"));
+  const [startDate, setStartDate] = useState<Date>(new Date("2024-11-01"));
+  const [endDate, setEndDate] = useState<Date>(new Date("2025-12-01"));
 
   const navigate = useNavigate();
 
@@ -43,7 +43,7 @@ const AnalyticsPage = () => {
   }, [setAnalytics]);
 
   return (
-    <div className="flex flex-col gap-2 py-4">
+    <div className="flex flex-col gap-2 py-4 bg-gradient-to-b from-yellow-50 to-white">
       <ToastContainer/>
       <div className="flex justify-center p-2">
         <div className={cardStyle + " py-1 pb-3 px-6 flex flex-col gap-2"}>
@@ -77,7 +77,7 @@ const AnalyticsPage = () => {
           <div className="flex flex-col gap-2">
             <div className="flex flex-col gap-2">
               <div className="text-center text-xl">
-                Щомісячна сума продажів:
+                Середня сума чеку за місяць:
               </div>
               <AnalyticsGraph
                 data={
@@ -92,7 +92,7 @@ const AnalyticsPage = () => {
             </div>
             <div className="flex flex-col gap-2">
               <div className="text-center text-xl">
-                Середня сума чеку за місяць:
+                Щомісячна сума продажів
               </div>
               <AnalyticsGraph
                 data={

@@ -24,9 +24,14 @@ router.put('/product/:productId', auth_middleware_1.default, product_controller_
 router.delete('/product/:productId', auth_middleware_1.default, product_controller_1.default.deleteProduct);
 router.post('/filter-products', auth_middleware_1.default, product_controller_1.default.filterProducts);
 router.post('/transaction', auth_middleware_1.default, transaction_controller_1.default.createTransaction);
-router.get('/transactions', auth_middleware_1.default, transaction_controller_1.default.fetchTransactions);
+router.post('/fetch-transactions', auth_middleware_1.default, transaction_controller_1.default.fetchTransactions);
 router.put('/transaction/:transactionId', auth_middleware_1.default, transaction_controller_1.default.updateTransaction);
 router.delete('/transaction/:transactionId', auth_middleware_1.default, transaction_controller_1.default.deleteTransaction);
 router.post('/filter-transactions', auth_middleware_1.default, transaction_controller_1.default.filterTransactions);
 router.post('/apriori', auth_middleware_1.default, analytics_controller_1.default.transactionsApriori);
+router.post('/predict', auth_middleware_1.default, analytics_controller_1.default.predictSales);
+router.post('/monthly', auth_middleware_1.default, analytics_controller_1.default.monthlySales);
+router.post('/average-transaction', auth_middleware_1.default, analytics_controller_1.default.averageTransaction);
+router.post('/transaction-sum', auth_middleware_1.default, analytics_controller_1.default.monthlyTransactionCost);
+router.post('/monthly-sales', auth_middleware_1.default, analytics_controller_1.default.monthlyProductSales);
 exports.default = router;

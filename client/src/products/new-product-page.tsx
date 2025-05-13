@@ -18,7 +18,7 @@ const NewProductPage = () => {
   const [avatarSet, setAvatarSet] = useState<boolean>(false);
 
   const [name, setName] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState<string>(categoriesArray[0]);
   const [description, setDescription] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
 
@@ -80,7 +80,7 @@ const NewProductPage = () => {
     setAvatar(undefined);
     setImgURL(defaultImage);
     setName("");
-    setCategory("");
+    setCategory(categoriesArray[0]);
     setDescription("");
     setPrice(0);
     setCharacteristics([]);
@@ -116,7 +116,7 @@ const NewProductPage = () => {
     <>
       <ToastContainer />
       {(!isLoading && (
-        <div className="flex flex-col py-4 gap-4">
+        <div className="flex flex-col py-4 gap-4 bg-gradient-to-b from-yellow-50 to-white">
           <div className="text-3xl text-center">
             Додання інформації про продукт
           </div>

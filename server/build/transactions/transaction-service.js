@@ -46,6 +46,33 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -89,23 +116,69 @@ exports.default = new /** @class */ (function () {
             });
         });
     };
-    TransactionService.prototype.fetchTransactions = function () {
+    TransactionService.prototype.fetchTransactions = function (filter, productName) {
         return __awaiter(this, void 0, void 0, function () {
-            var transactions;
+            function getTransactionsWithCost(filter, productName) {
+                return __awaiter(this, void 0, void 0, function () {
+                    var transactions, transactionsWithCost;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0: return [4 /*yield*/, prisma_client_1.default.transaction.findMany({
+                                    select: {
+                                        id: true,
+                                        date: true,
+                                        products: {
+                                            select: {
+                                                quantity: true,
+                                                product: {
+                                                    select: {
+                                                        price: true,
+                                                        name: true
+                                                    },
+                                                },
+                                            },
+                                        },
+                                    },
+                                    where: {
+                                        date: {
+                                            gte: filter.date.gte,
+                                            lte: filter.date.lte
+                                        }
+                                    }
+                                })];
+                            case 1:
+                                transactions = _a.sent();
+                                if (productName)
+                                    transactions = transactions.filter(function (transaction) {
+                                        return transaction.products.some(function (product) { return product.product && product.product.name.toUpperCase().includes(productName.toUpperCase()); });
+                                    });
+                                transactionsWithCost = [];
+                                transactions.forEach(function (transaction) {
+                                    if (transaction.date) {
+                                        var totalCost = transaction.products.reduce(function (acc, product) {
+                                            if (product.product && product.quantity) {
+                                                return acc + product.product.price * product.quantity;
+                                            }
+                                            return acc;
+                                        }, 0);
+                                        transactionsWithCost.push({
+                                            id: transaction.id,
+                                            date: transaction.date,
+                                            products: transaction.products,
+                                            totalCost: totalCost,
+                                        });
+                                    }
+                                });
+                                return [2 /*return*/, transactionsWithCost];
+                        }
+                    });
+                });
+            }
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, prisma_client_1.default.transaction.findMany({
-                            include: {
-                                products: {
-                                    include: {
-                                        product: true,
-                                    },
-                                },
-                            },
-                        })];
-                    case 1:
-                        transactions = _a.sent();
-                        return [2 /*return*/, transactions];
+                    case 0:
+                        return [4 /*yield*/, getTransactionsWithCost(filter, productName)];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
@@ -170,6 +243,75 @@ exports.default = new /** @class */ (function () {
                         process.exit(1);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    // async getTransactionByProductName (productName: string) {
+    //   const transactions = await prismaClient.transaction.findMany({
+    //     where: {
+    //       products: {
+    //         some: {
+    //           product: {
+    //             name: {
+    //               equals: productName,
+    //             },
+    //           },
+    //         },
+    //       },
+    //     },
+    //   });
+    //   return transactions;
+    // }
+    TransactionService.prototype.fetchRangeSales = function (productId) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            var transactions, monthlySalesMap, transactions_1, transactions_1_1, transaction, transactionDate, monthYear, productQuantity, monthlySales;
+            var e_1, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0: return [4 /*yield*/, prisma_client_1.default.transaction.findMany({
+                            include: {
+                                products: {
+                                    where: {
+                                        productId: productId
+                                    }
+                                },
+                            },
+                        })];
+                    case 1:
+                        transactions = (_c.sent()).filter(function (transaction) { return transaction.products.length > 0; });
+                        monthlySalesMap = new Map();
+                        try {
+                            // Iterate through transactions and accumulate sales by month
+                            for (transactions_1 = __values(transactions), transactions_1_1 = transactions_1.next(); !transactions_1_1.done; transactions_1_1 = transactions_1.next()) {
+                                transaction = transactions_1_1.value;
+                                transactionDate = transaction.date;
+                                if (transactionDate) {
+                                    monthYear = transactionDate.toISOString().slice(0, 7);
+                                    productQuantity = ((_a = transaction.products.find(function (p) { return p.productId === productId; })) === null || _a === void 0 ? void 0 : _a.quantity) || 0;
+                                    if (!monthlySalesMap.has(monthYear)) {
+                                        monthlySalesMap.set(monthYear, 0);
+                                    }
+                                    monthlySalesMap.set(monthYear, monthlySalesMap.get(monthYear) + productQuantity);
+                                }
+                            }
+                        }
+                        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                        finally {
+                            try {
+                                if (transactions_1_1 && !transactions_1_1.done && (_b = transactions_1.return)) _b.call(transactions_1);
+                            }
+                            finally { if (e_1) throw e_1.error; }
+                        }
+                        monthlySales = Array.from(monthlySalesMap).map(function (_a) {
+                            var _b = __read(_a, 2), month = _b[0], sales = _b[1];
+                            return ({
+                                month: month,
+                                sales: sales,
+                            });
+                        });
+                        return [2 /*return*/, monthlySales];
                 }
             });
         });

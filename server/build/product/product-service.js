@@ -79,25 +79,26 @@ exports.default = new /** @class */ (function () {
         });
     };
     ProductService.prototype.createProduct = function (data) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var query, error_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
+                        _b.trys.push([0, 2, , 3]);
                         query = {
                             data: {
                                 name: data.name,
                                 category: data.category,
                                 description: data.description,
                                 price: data.price,
-                                image: data.image,
+                                image: (_a = data.image) !== null && _a !== void 0 ? _a : null,
                                 characteristics: {
                                     createMany: {
                                         data: data.characteristics.map(function (_a) {
-                                            var label = _a.label, value = _a.value;
+                                            var key = _a.key, value = _a.value;
                                             return ({
-                                                key: label,
+                                                key: key,
                                                 value: value,
                                             });
                                         }),
@@ -105,10 +106,11 @@ exports.default = new /** @class */ (function () {
                                 },
                             },
                         };
+                        console.log(query);
                         return [4 /*yield*/, prisma_client_1.default.product.create(query)];
-                    case 1: return [2 /*return*/, _a.sent()];
+                    case 1: return [2 /*return*/, _b.sent()];
                     case 2:
-                        error_2 = _a.sent();
+                        error_2 = _b.sent();
                         console.error(error_2);
                         process.exit(1);
                         return [3 /*break*/, 3];

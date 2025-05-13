@@ -27,8 +27,8 @@ export default new class AuthController {
             .json({ message: "User signed in successfully", success: true, user }).send();
           next();
         } catch (error) {
+          res.status(500).send(error);
           throw error;
-          return res.status(500).send(error);
         }
       };
 
@@ -47,7 +47,7 @@ export default new class AuthController {
             return res.json({message:'Incorrect password or email' }).send()
           }
            const token = generateToken(user.id);
-           res.status(201).json(token).send();
+           res.status(201).json({token, role: user.role}).send();
            next()
         } catch (error) {
           console.error(error);

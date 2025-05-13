@@ -24,10 +24,12 @@ const LoginPage = () => {
 
   const handleSubmit = async () => {
     try {
-      const token = (await $api.post("/login", inputValue)).data;
-      localStorage.setItem("token", token);
+      const response = (await $api.post("/login", inputValue)).data;
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("role", response.role);
       setHeader();
       navigate("/");
+      window.location.reload();
     } catch(error) {
       console.log(error);
     }

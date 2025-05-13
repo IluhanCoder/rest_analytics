@@ -1,46 +1,38 @@
-import { deleteButtonStyle } from "../styles/button-styles";
-import { cardStyle } from "../styles/card-styles";
 import { Characteristic } from "./product-types";
 
 type Params = {
   characteristics: Array<Characteristic>;
-  onRemove?: Function;
+  onRemove?: (newList: Characteristic[]) => void;
 };
 
-const CharacteristicsMapper = (params: Params) => {
-  const { characteristics, onRemove } = params;
-
+const CharacteristicsMapper = ({ characteristics, onRemove }: Params) => {
   const handleRemove = (index: number) => {
     if (!onRemove) return;
-    const temp = characteristics;
-    temp.splice(index, 1);
-    onRemove(temp);
+    const updated = [...characteristics];
+    updated.splice(index, 1);
+    onRemove(updated);
   };
 
   return (
-    <div className={"flex flex-col p-3 gap-2"}>
-      {characteristics.map((item: Characteristic) => {
-        return (
-          <div
-            key={item.key}
-            className={"flex justify-between px-4 py-2 border " + cardStyle}
-          >
-            <div>{item.key}</div>
-            <div>{item.value}</div>
-            {onRemove && (
-              <div>
-                <button
-                  className={deleteButtonStyle}
-                  type="button"
-                  onClick={() => handleRemove(characteristics.indexOf(item))}
-                >
-                  видалити
-                </button>
-              </div>
-            )}
-          </div>
-        );
-      })}
+    <div className="flex flex-col gap-3">
+      {characteristics.map((item, index) => (
+        <div
+          key={item.key}
+          className="flex items-center justify-between bg-white border border-gray-200 rounded-xl shadow-sm px-5 py-3"
+        >
+          <div className="text-gray-700 font-medium">{item.key}</div>
+          <div className="text-gray-600">{item.value}</div>
+          {onRemove && (
+            <button
+              type="button"
+              onClick={() => handleRemove(index)}
+              className="text-red-500 hover:text-white hover:bg-red-500 transition px-3 py-1 rounded-md border border-red-300 text-sm"
+            >
+              видалити
+            </button>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

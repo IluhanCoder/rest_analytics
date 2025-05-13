@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { linkStyle } from "./styles/link-styles";
 import { useEffect } from "react";
 import { setHeader } from "./axios-setup";
+import InfoPage from "./info-page";
 registerLocale("ua", uk);
 
 function App() {
@@ -26,36 +27,30 @@ function App() {
 
   return (
     <BrowserRouter>
-      <header className="flex flex-row px-4 py-2 shadow-sm border gap-4 justify-between px-10">
-        <div className="text-2xl">
-          🍕
-        </div>
-        <div className="flex gap-4">
-          <Link to="products" className="mt-0.5 hover:text-gray-400">
-            меню
-          </Link>
-          <Link to="new-product" className="mt-0.5 hover:text-gray-400">
-            нова позиція
-          </Link>
-          <Link to="transactions" className="mt-0.5 hover:text-gray-400">
-            чеки
-          </Link>
-          <Link to="prediction" className="mt-0.5 hover:text-gray-400">
-            статистика
-          </Link>
-          <Link to="analytics" className="mt-0.5 hover:text-gray-400">
-            аналітика
-          </Link>
-          <Link to="pairs" className="mt-0.5 hover:text-gray-400">
-            шаблоні замовлення
-          </Link>
-          <Link to="/" className="mt-0.5 hover:text-gray-400">
-            обліковий запис
-          </Link>
-        </div>
-      </header>
+      <header className="flex items-center justify-between px-10 py-4 border-b shadow-sm bg-white">
+  <div className="text-2xl font-bold tracking-wide text-green-700">
+    Tramonto
+  </div>
+  <nav className="flex gap-6 text-gray-700 text-sm font-medium">
+    <Link to="products" className="hover:text-green-500 transition-colors">меню</Link>
+
+    {localStorage.getItem("role") === "admin" && (
+      <>
+        <Link to="new-product" className="hover:text-green-500 transition-colors">нова позиція</Link>
+        <Link to="transactions" className="hover:text-green-500 transition-colors">чеки</Link>
+        <Link to="prediction" className="hover:text-green-500 transition-colors">статистика</Link>
+        <Link to="analytics" className="hover:text-green-500 transition-colors">аналітика</Link>
+        <Link to="pairs" className="hover:text-green-500 transition-colors">шаблонні замовлення</Link>
+      </>
+    )}
+
+    <Link to="/" className="hover:text-green-500 transition-colors">обліковий запис</Link>
+  </nav>
+</header>
+
       <Routes>
         <Route index element={<WelcomePage />} />
+        <Route path="info" element={<InfoPage/>}/>
         <Route path="signup" element={<SignupPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="products" element={<ProductsPage />} />

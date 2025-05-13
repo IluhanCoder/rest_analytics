@@ -59,7 +59,7 @@ exports.default = new /** @class */ (function () {
                         existingUser = _b.sent();
                         console.log(existingUser);
                         if (existingUser) {
-                            return [2 /*return*/, res.json({ message: "User already exists" })];
+                            return [2 /*return*/, res.status(400).json({ message: "User already exists" }).send()];
                         }
                         return [4 /*yield*/, bcryptjs_1.default.hash(password, 12)];
                     case 2:
@@ -75,13 +75,13 @@ exports.default = new /** @class */ (function () {
                         });
                         res
                             .status(201)
-                            .json({ message: "User signed in successfully", success: true, user: user });
+                            .json({ message: "User signed in successfully", success: true, user: user }).send();
                         next();
                         return [3 /*break*/, 5];
                     case 4:
                         error_1 = _b.sent();
-                        console.error(error_1);
-                        return [3 /*break*/, 5];
+                        res.status(500).send(error_1);
+                        throw error_1;
                     case 5: return [2 /*return*/];
                 }
             });
@@ -97,26 +97,22 @@ exports.default = new /** @class */ (function () {
                         _b.trys.push([0, 3, , 4]);
                         _a = req.body, email = _a.email, password = _a.password;
                         if (!email || !password) {
-                            return [2 /*return*/, res.json({ message: 'All fields are required' })];
+                            return [2 /*return*/, res.json({ message: 'All fields are required' }).send()];
                         }
                         return [4 /*yield*/, prisma_client_1.default.user.findUnique({ where: { email: email } })];
                     case 1:
                         user = _b.sent();
                         if (!user) {
-                            return [2 /*return*/, res.json({ message: 'Incorrect password or email' })];
+                            return [2 /*return*/, res.json({ message: 'Incorrect password or email' }).send()];
                         }
                         return [4 /*yield*/, bcryptjs_1.default.compare(password, user.password)];
                     case 2:
                         auth = _b.sent();
                         if (!auth) {
-                            return [2 /*return*/, res.json({ message: 'Incorrect password or email' })];
+                            return [2 /*return*/, res.json({ message: 'Incorrect password or email' }).send()];
                         }
                         token = (0, generate_token_1.default)(user.id);
-                        res.cookie("token", token, {
-                            withCredentials: true,
-                            httpOnly: false,
-                        });
-                        res.status(201).json({ message: "User logged in successfully", success: true });
+                        res.status(201).json({ token: token, role: user.role }).send();
                         next();
                         return [3 /*break*/, 4];
                     case 3:
@@ -133,9 +129,9 @@ exports.default = new /** @class */ (function () {
             var token;
             var _this = this;
             return __generator(this, function (_a) {
-                token = req.cookies.token;
+                token = req.body.token;
                 if (!token) {
-                    return [2 /*return*/, res.json({ status: false })];
+                    return [2 /*return*/, res.json({ status: false }).send()];
                 }
                 jsonwebtoken_1.default.verify(token, process.env.TOKEN_KEY, function (err, data) { return __awaiter(_this, void 0, void 0, function () {
                     var user;
@@ -143,14 +139,14 @@ exports.default = new /** @class */ (function () {
                         switch (_a.label) {
                             case 0:
                                 if (!err) return [3 /*break*/, 1];
-                                return [2 /*return*/, res.json({ status: false })];
+                                return [2 /*return*/, res.json({ status: false }).send()];
                             case 1: return [4 /*yield*/, prisma_client_1.default.user.findUnique({ where: { id: data.id } })];
                             case 2:
                                 user = _a.sent();
                                 if (user)
-                                    return [2 /*return*/, res.json({ status: true, user: user.username })];
+                                    return [2 /*return*/, res.json({ status: true, user: user.username }).send()];
                                 else
-                                    return [2 /*return*/, res.json({ status: false })];
+                                    return [2 /*return*/, res.json({ status: false }).send()];
                                 _a.label = 3;
                             case 3: return [2 /*return*/];
                         }

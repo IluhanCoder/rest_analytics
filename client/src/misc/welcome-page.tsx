@@ -34,13 +34,14 @@ const WelcomePage = () => {
 
   const Logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     dropHeader();
     navigate("/signup");
   };
 
   if (isAuth !== undefined)
     return (
-      <div className="flex flex-row justify-center">
+      <div className="bg-gradient-to-b from-yellow-50 to-white flex flex-row justify-center">
         <div
           className={
             cardStyle + "flex flex-col justify-center mt-40 px-10 py-4"

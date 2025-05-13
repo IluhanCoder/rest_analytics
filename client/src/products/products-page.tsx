@@ -4,11 +4,20 @@ import { Link } from "react-router-dom";
 
 const ProductsPage = () => {
   return (
-    <div className="flex flex-col gap-5 pt-2">
-      <div className="flex flex-col gap-2">
-        <div className="flex justify-center text-3xl font-bold">меню</div>
+    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-white py-10 px-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-10">
+          <h1 className="text-5xl font-extrabold text-green-800 tracking-wide mb-3 uppercase">
+            меню
+          </h1>
+          <p className="text-gray-700 text-lg">
+            Смак справжньої Італії – щодня у вашій тарілці
+          </p>
+        </div>
+        <div className="bg-white rounded-xl shadow-xl p-6">
+          <ProductsCatalogue deleteAvailable={localStorage.getItem("role") === "admin"} />
+        </div>
       </div>
-      <ProductsCatalogue deleteAvailable />
     </div>
   );
 };

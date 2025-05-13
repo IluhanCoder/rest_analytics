@@ -94,7 +94,7 @@ const TransactionsPage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-gradient-to-b from-yellow-50 to-white">
       <ToastContainer />
       <div className="flex justify-center py-3">
         <Link to="/new-transaction" className={buttonStyle}>

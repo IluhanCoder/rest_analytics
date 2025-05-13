@@ -39,23 +39,134 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var transaction_service_1 = __importDefault(require("../transactions/transaction-service"));
 var analytics_service_1 = __importDefault(require("./analytics-service"));
 exports.default = new /** @class */ (function () {
     function AnalyticsController() {
     }
     AnalyticsController.prototype.transactionsApriori = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var transactions, result;
+            var _a, minSupport, maxSupport, minConfidence, maxConfidence, category, result, error_1;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        _a = req.body, minSupport = _a.minSupport, maxSupport = _a.maxSupport, minConfidence = _a.minConfidence, maxConfidence = _a.maxConfidence, category = _a.category;
+                        return [4 /*yield*/, analytics_service_1.default.transactionsApriori(minSupport, maxSupport, minConfidence, maxConfidence, category)];
+                    case 1:
+                        result = _b.sent();
+                        return [2 /*return*/, res.status(200).send(result)];
+                    case 2:
+                        error_1 = _b.sent();
+                        console.log(error_1);
+                        return [2 /*return*/, res.status(500).send(error_1)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AnalyticsController.prototype.predictSales = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, productId, months, result, error_2;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        _a = req.body, productId = _a.productId, months = _a.months;
+                        return [4 /*yield*/, analytics_service_1.default.predictSales(productId, months)];
+                    case 1:
+                        result = _b.sent();
+                        return [2 /*return*/, res.status(200).send(result)];
+                    case 2:
+                        error_2 = _b.sent();
+                        console.log(error_2);
+                        return [2 /*return*/, res.status(500).send(error_2)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AnalyticsController.prototype.monthlySales = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, startMonth, endMonth, result, error_3;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        _a = req.body, startMonth = _a.startMonth, endMonth = _a.endMonth;
+                        return [4 /*yield*/, analytics_service_1.default.monthlyTransactions(startMonth, endMonth)];
+                    case 1:
+                        result = _b.sent();
+                        return [2 /*return*/, res.status(200).send(result)];
+                    case 2:
+                        error_3 = _b.sent();
+                        console.log(error_3);
+                        return [2 /*return*/, res.status(500).send(error_3)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AnalyticsController.prototype.averageTransaction = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, startMonth, endMonth, result, error_4;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        _a = req.body, startMonth = _a.startMonth, endMonth = _a.endMonth;
+                        return [4 /*yield*/, analytics_service_1.default.averageTransaction(startMonth, endMonth)];
+                    case 1:
+                        result = _b.sent();
+                        return [2 /*return*/, res.status(200).send(result)];
+                    case 2:
+                        error_4 = _b.sent();
+                        console.log(error_4);
+                        return [2 /*return*/, res.status(500).send(error_4)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AnalyticsController.prototype.monthlyTransactionCost = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, startMonth, endMonth, result, error_5;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        _a = req.body, startMonth = _a.startMonth, endMonth = _a.endMonth;
+                        console.log(startMonth);
+                        console.log(endMonth);
+                        return [4 /*yield*/, analytics_service_1.default.monthlyTransactionSum(startMonth, endMonth)];
+                    case 1:
+                        result = _b.sent();
+                        return [2 /*return*/, res.status(200).send(result)];
+                    case 2:
+                        error_5 = _b.sent();
+                        console.log(error_5);
+                        return [2 /*return*/, res.status(500).send(error_5)];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    AnalyticsController.prototype.monthlyProductSales = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var productId, result, error_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, transaction_service_1.default.fetchTransactions()];
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        productId = req.body.productId;
+                        return [4 /*yield*/, analytics_service_1.default.monthlyProductSales(productId)];
                     case 1:
-                        transactions = _a.sent();
-                        return [4 /*yield*/, analytics_service_1.default.transactionsApriori(transactions)];
-                    case 2:
                         result = _a.sent();
                         return [2 /*return*/, res.status(200).send(result)];
+                    case 2:
+                        error_6 = _a.sent();
+                        console.log(error_6);
+                        return [2 /*return*/, res.status(500).send(error_6)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });

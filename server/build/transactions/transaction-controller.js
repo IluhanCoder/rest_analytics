@@ -45,74 +45,106 @@ exports.default = new /** @class */ (function () {
     }
     TransactionController.prototype.createTransaction = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, result;
+            var data, result, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 2, , 3]);
                         data = req.body;
                         return [4 /*yield*/, transaction_service_1.default.createTransaction(data.date, data.products)];
                     case 1:
                         result = _a.sent();
                         return [2 /*return*/, res.status(200).send(result)];
+                    case 2:
+                        error_1 = _a.sent();
+                        console.log(error_1);
+                        return [2 /*return*/, res.status(500).send(error_1)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     TransactionController.prototype.fetchTransactions = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var transactions;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, transaction_service_1.default.fetchTransactions()];
+            var _a, filter, productName, transactions, error_2;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        _a = req.body, filter = _a.filter, productName = _a.productName;
+                        return [4 /*yield*/, transaction_service_1.default.fetchTransactions(filter, productName)];
                     case 1:
-                        transactions = _a.sent();
+                        transactions = _b.sent();
                         return [2 /*return*/, res.status(200).json(transactions)];
+                    case 2:
+                        error_2 = _b.sent();
+                        console.log(error_2);
+                        return [2 /*return*/, res.status(500).send(error_2)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     TransactionController.prototype.updateTransaction = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var transactionData, transactionId, transaction;
+            var transactionData, transactionId, transaction, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 2, , 3]);
                         transactionData = req.body.transactionData;
                         transactionId = req.params.transactionId;
                         return [4 /*yield*/, transaction_service_1.default.updateTransaction(transactionId, transactionData)];
                     case 1:
                         transaction = _a.sent();
                         return [2 /*return*/, res.status(200).json(transaction)];
+                    case 2:
+                        error_3 = _a.sent();
+                        console.log(error_3);
+                        return [2 /*return*/, res.status(500).send(error_3)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     TransactionController.prototype.deleteTransaction = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var transactionId;
+            var transactionId, error_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 2, , 3]);
                         transactionId = req.params.transactionId;
                         return [4 /*yield*/, transaction_service_1.default.deleteTransaction(transactionId)];
                     case 1:
                         _a.sent();
                         return [2 /*return*/, res.status(200).send("transaction has been deleted succesfully")];
+                    case 2:
+                        error_4 = _a.sent();
+                        console.log(error_4);
+                        return [2 /*return*/, res.status(500).send(error_4)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });
     };
     TransactionController.prototype.filterTransactions = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
-            var filter, transactions;
+            var filter, transactions, error_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        _a.trys.push([0, 2, , 3]);
                         filter = req.body.filter;
                         return [4 /*yield*/, transaction_service_1.default.filterTransactions(filter)];
                     case 1:
                         transactions = _a.sent();
                         return [2 /*return*/, res.status(200).json(transactions)];
+                    case 2:
+                        error_5 = _a.sent();
+                        console.log(error_5);
+                        return [2 /*return*/, res.status(500).send(error_5)];
+                    case 3: return [2 /*return*/];
                 }
             });
         });

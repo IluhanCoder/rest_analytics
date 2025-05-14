@@ -20,9 +20,9 @@ const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<TransactionResponse[]>();
   const [productName, setProductName] = useState<string>("");
   const [startDate, setStartDate] = useState<Date>(
-    new Date("2024-01-02T00:00:00"),
+    new Date("2025-01-02T00:00:00"),
   );
-  const [endDate, setEndDate] = useState<Date>(new Date("2024-12-01T23:00:00"));
+  const [endDate, setEndDate] = useState<Date>(new Date("2025-12-01T23:00:00"));
 
   const filterTransactions = async (stDate: Date, enDate: Date) => {
     try {

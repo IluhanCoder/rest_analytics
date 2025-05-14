@@ -37,7 +37,7 @@ const SignupPage = () => {
       }
       toast("обробка запиту...");
      await authService.SignUp(inputValue);
-     navigate("/");
+     navigate("/info");
     } catch(error: any) {
       if(error.status = 401) toast.error("ви маєете бути авторизованими!");
       else toast.error(error.message);

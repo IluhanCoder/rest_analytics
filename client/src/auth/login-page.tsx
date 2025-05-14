@@ -28,7 +28,7 @@ const LoginPage = () => {
       localStorage.setItem("token", response.token);
       localStorage.setItem("role", response.role);
       setHeader();
-      navigate("/");
+      navigate("/info");
       window.location.reload();
     } catch(error) {
       console.log(error);

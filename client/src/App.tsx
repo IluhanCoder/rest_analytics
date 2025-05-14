@@ -28,9 +28,9 @@ function App() {
   return (
     <BrowserRouter>
       <header className="flex items-center justify-between px-10 py-4 border-b shadow-sm bg-white">
-  <div className="text-2xl font-bold tracking-wide text-green-700">
+  <Link to="/info" className="text-2xl font-bold tracking-wide text-green-700">
     Tramonto
-  </div>
+  </Link>
   <nav className="flex gap-6 text-gray-700 text-sm font-medium">
     <Link to="products" className="hover:text-green-500 transition-colors">меню</Link>
 
